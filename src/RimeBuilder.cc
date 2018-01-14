@@ -35,6 +35,7 @@ char* findRhymeMatches(char* s) {
 char* findInitialMatch(char* s) {
 	// find IPA value for initial
 	// search for matches with the same initial: http://www.speech.cs.cmu.edu/cgi-bin/cmudict
+	// Account for blank initials. "Hour" and "our" have rhyme "aʊəɹ", initial 0
 	// return first match
 }
 
