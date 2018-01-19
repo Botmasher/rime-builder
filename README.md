@@ -12,4 +12,4 @@ For a Chinese term, this tool will simply fetch data from web backends to gather
 
 ## Source code
 
-This project is developed in C++ and lightly trails the [Google C++ styleguide](https://google.github.io/styleguide/cppguide.html) whenever that's convenient or remembered. Any proposed cleanup should aim to move the code towards and not away from those standards.
+This project is primarily developed in Python. The main `rimebuilder` Python package makes API calls to [datamuse](https://www.datamuse.com/api/) for final rhymes and reads the [CMU speech dictionary](http://www.speech.cs.cmu.edu/cgi-bin/cmudict) to find initial rhymes.
