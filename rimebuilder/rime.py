@@ -51,50 +51,72 @@ class PhonemeLocalAPI:
 		# TODO fetch vowels from CMU: http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b.phones
 		self.vowels = ["AA", "AE", "AH", "AO", "AW", "AY", "EH", "ER", "EY", "IH", "IY", "OW", "OY", "UH", "UW"]
 
-	def find_initial_match(self, word_phonemes):
-		# Search for a single-syllable word with the same initials
-		
-		#	1. cut off source word's rhyme, leaving just the transliterated initial (or everything before main V)
-		first_vowel = next(s for s in word_phonemes if s[:2] in self.vowels)
-		word_initial = word_phonemes[0:word_phonemes.index(first_vowel)]
-		
-		# 2. check target lines for words that have the same initial (everything before main V)
+	def find_one_syllable_initial(self, phonemes):
+		"""
+		Input:	sequential list of phonemes in a single word
+		Return: sequential list of only phonemes in the word's initial
+		"""
+		vowels = [s for s in phonemes if s[:2] in self.vowels]
+		if vowels == [] or len(vowels) > 1:
+			return None
+		first_vowel_index = phonemes.index(vowels[0])
+		initial = phonemes[0:first_vowel_index]
+		return initial
+
+	def find_initial_match(self, phonemes):
+		"""
+		Input: 	sequential list of phonemes in a single word
+		Return: string of single-syllable word with the same initial
+		"""
+		word_initial = self.find_one_syllable_initial(phonemes)
+		# check target words for single-syllable words with matching initial
 		# TODO handle cases where target has no vowel
 		found_initial_match = ""
 		with open(self.path, "r") as file:
 			for line in file:
 				line_items = line.split(" ")
 				line_phonemes = line_items[2:]
-				line_vowels = [s for s in line_phonemes if s[:2] in self.vowels]
-				if line_vowels:
-					line_initial = line_phonemes[0:line_phonemes.index(line_vowels[0])]
-					if line_initial == word_initial and len(line_vowels) == 1:
-						found_initial_match = line_items[0]
+				line_initial = self.find_one_syllable_initial(line_phonemes)
+				# search valid entries for a match
+				if line[:3] != ";;;" and line_initial and line_initial == word_initial:
+					found_initial_match = line_items[0]
 		return found_initial_match
 
-		# 3. count that the target is a one-syllable word
-
-		# 	3a. store representation of all main Vs and all Cs in this class
-		# 	3b. count how many Vs occur in the target's phoneme list
-		# 	3c. return whether or not the target matches the single-syllable expectation
-
-	def find_word(self, word):
-		self.checked_words.append(word)
+	def transliterate_word(self, word):
+		"""
+		Input: 	string spelling a single word
+		Return: sequential list of phonemes in that word
+		"""
 		word_phonemes = []
 		capsed_word = word.upper() 						# resource headwords are all uppercase
 		with open(self.path, "r") as file:
 			for line in file:
 				# BETTER - redo the word using CMU transliteration to avoid two lin searches
-				if line[0:len(capsed_word)] == capsed_word:
+				if line.split(" ")[0] == capsed_word:
 					word_phonemes = line.split(" ")[2:]
+		return word_phonemes
+
+	def rhyme_initial(self, word):
+		self.checked_words.append(word)
+		word_phonemes = self.transliterate_word(word)
 		return self.find_initial_match(word_phonemes)
 
 def rime_start():
 	final_rhymer = RhymeAPI()
+	print("-- Welcome to the ENGLISH FANQIE RIME BUILDER --")
+	print("This uses a Chinese linguistic tradition to take another look at English words.")
+	print("This tool aims to analyze the phonology of basic English words from another perspective.")
+	print("Please input a one syllable word. I will build an initial and final rhyme for you.\n")
 	initial_rhymer = PhonemeLocalAPI("rimebuilder/transliterations", "cmudict-0.7b.txt")
+	# TODO handle illegal character input
 	word = input("Type a one syllable word for me to rhyme: ")
 	rhyme = single_syllable_rhyme(word, final_rhymer)
-	initial = initial_rhymer.find_word(word)
-	print ("Your word has the same end rhyme as: " + rhyme)
-	print ("Your word has the same initial as: " + initial.lower())
+	initial = initial_rhymer.rhyme_initial(word).lower()
+	print("Your word has the same initial as: " + initial)
+	print("Your word has the same end rhyme as: " + rhyme)
+	print("The fanqie for your word is: %s, %s" % (initial.upper(), rhyme.upper()))
+	reset = input("\nFind another English fanqie? ")
+	if reset in ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"]:
+		return rime_start()
+	print("Exiting...")
 	return None
