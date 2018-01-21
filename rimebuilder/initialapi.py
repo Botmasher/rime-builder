@@ -1,5 +1,7 @@
 import os
 
+# TODO account for cases with 0 initial (only main vowel)
+
 class InitialAPI:
 	def __init__(self, path, file):
 		self.checked_words = []

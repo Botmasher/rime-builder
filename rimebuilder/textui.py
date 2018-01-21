@@ -1,5 +1,7 @@
 import filterrhymes
 
+# TODO account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
+
 def make_ui_kw_variants():
 	ui_kw_variants = {'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"]}
 	return ui_kw_variants
@@ -7,8 +9,8 @@ def make_ui_kw_variants():
 def run_ui(initial_rhymer, final_rhymer):
 	kw_variants = make_ui_kw_variants()
 	print("\n-- Welcome to the ENGLISH FANQIE RIME BUILDER --")
-	print("\nThis uses a Chinese linguistic tradition to take another look at English words.")
-	print("This tool aims to analyze the phonology of basic English words from another perspective.")
+	print("\nUse the Chinese linguistic tradition to take a different look at English pronunciation.")
+	print("This tool analyzes the phonology of basic English words using a method akin to Fanqie.")
 	print("Give me a one syllable word. I will build an initial and final rhyme for you.\n")
 	# TODO handle illegal character input
 	word = input("Type a single syllable word for me to rhyme: ")

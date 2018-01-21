@@ -1,5 +1,7 @@
 import fetchjson
 
+# TODO account for 0-rhymes
+
 class RhymeAPI:
 	url = "https://api.datamuse.com"
 	rhymeswith = "/words?rel_rhy="		# words that rhyme
