@@ -1,3 +1,5 @@
+import os
+
 class InitialAPI:
 	def __init__(self, path, file):
 		self.checked_words = []
