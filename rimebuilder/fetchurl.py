@@ -7,7 +7,6 @@ def fetchJSON(path):
 		return data
 
 def fetchHTML(path):
-	print(path)
 	with urllib.request.urlopen(path) as url:
 		data = url.read().decode()
 		url.close()
