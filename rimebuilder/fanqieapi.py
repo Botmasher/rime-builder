@@ -14,10 +14,11 @@ class FanqieAPI:
 	def locate_fanqie_node(self, xml):
 		root = elemtree.fromstring(xml)
 		#find the w:Fanqie node
-		for elem in root.iter("a"):
-			if "title" in elem.attrib and elem.attrib['title'] == "w:Fanqie":
+		for elem in root.iter("tr"):
+			if elem.find("th/small/a") and "title" in elem.fromstring("th/small/a") and elem.fromstring("th/small/a").attrib['title'] == "w:Fanqie":
+			#if "title" in elem.attrib and elem.attrib['title'] == "w:Fanqie":
 				# backup to the actual Fanqie rhyme using XPath expression
-				things = root.findall("")
+				things = elem.find("td/span/").text
 				print (things)
 
 	def rhyme(self, zi):
