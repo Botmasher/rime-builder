@@ -1,6 +1,7 @@
 import os
 
 # TODO account for cases with 0 initial (only main vowel)
+# TODO account for searched headword not in dictionary
 
 class InitialAPI:
 	def __init__(self, path, file):

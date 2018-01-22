@@ -1,6 +1,7 @@
-import fetchjson
+import fetchurl
 
 # TODO account for 0-rhymes
+# TODO account for URL does not exist
 
 class RhymeAPI:
 	url = "https://api.datamuse.com"
@@ -15,16 +16,16 @@ class RhymeAPI:
 
 	def rhyme(self, word):
 		self.rhymed_words.append(word)
-		return fetchjson.fetch(self.url+self.rhymeswith+word)
+		return fetchurl.fetchJSON(self.url+self.rhymeswith+word)
 
 	def means_like(self, word):
-		return fetchjson.fetch(self.url+self.meanslike+word)
+		return fetchurl.fetchJSON(self.url+self.meanslike+word)
 
 	def sounds_like(self, word):
-		return fetchjson.fetch(self.url+self.soundslike+word)
+		return fetchurl.fetchJSON(self.url+self.soundslike+word)
 
 	def spelled_like(self, word):
-		return fetchjson.fetch(self.url+self.spelledlike+word)
+		return fetchurl.fetchJSON(self.url+self.spelledlike+word)
 
 	def suggest(self, word):
-		return fetchjson.fetch(self.url+self.suggested+word)
+		return fetchurl.fetchJSON(self.url+self.suggested+word)

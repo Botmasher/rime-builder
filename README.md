@@ -30,7 +30,7 @@ Some thoughts from my experiments with the tool:
 - Identifying multiple matches would provide more support for a term.
 - In line with what I've read about historical Chinese phonology, English results are coherent but do not correspond to phonemes. It seems this method would require chaining and scale to build a case for English phonology, as was done for Middle Chinese.
 - Why no helpful negative examples, like the "thing" vs "this" above?
-- Fanqie entries and have peculiar formatting in Chinese manuscripts, both internally and with respect to other entries. Any interesting results from finding a parallel for these?
+- Fanqie entries have peculiar formatting in Chinese manuscripts, both internally and with respect to other entries. Any interesting results from parallelling these?
 
 ## Source code
 
