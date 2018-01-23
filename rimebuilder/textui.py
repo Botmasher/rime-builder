@@ -25,6 +25,7 @@ def run_trad_fanqie(fanqie_rhymer):
 
 def run_en_fanqie(initial_rhymer, final_rhymer):
 	print("\n--- English Fanqie Builder ---")
+	print("This tool analyzes the phonology of basic English words using a fanqie-style method.")
 	print("Type a one syllable word. I will build an initial and final rhyme for you.\n")
 	word = input("Type a single syllable word for me to rhyme: ")
 	print("Rhyming from front to back . . .")
@@ -34,7 +35,7 @@ def run_en_fanqie(initial_rhymer, final_rhymer):
 		initial = initial.lower()
 		print("\nYour word has the same initial as: " + initial)
 		print("Your word has the same end rhyme as: " + rhyme)
-		print("The fanqie for your word is: %s, %s" % (initial.upper(), rhyme.upper()))
+		print("The fanqie for your word is: %s, %s" % (initial.upper().split(" ")[0], rhyme.upper()))
 	else:
 		print("Could not build a fanqie for your word.")
 		print("You can try again though.")
@@ -54,9 +55,8 @@ def select_subtool():
 	return selected
 
 def run_ui(fanqie_rhymer, initial_rhymer, final_rhymer):
-	print("\n-- Welcome to the ENGLISH FANQIE RIME BUILDER --")
-	print("\nUse the Chinese linguistic tradition to take a different look at English pronunciation.")
-	print("This tool analyzes the phonology of basic English words using a method akin to Fanqie.")
+	print("\n-- Welcome to the FANQIE RIME BUILDER --")
+	print("\nFollow the Chinese linguistic tradition. Use it to take a different look at English pronunciation.")
 	selected = select_subtool()
 	if (selected in ["2", "2.", "2)"]):
 		run_trad_fanqie(fanqie_rhymer)

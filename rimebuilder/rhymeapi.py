@@ -1,8 +1,10 @@
 import fetchurl
 import random
 
+# TODO handle URL does not exist
 # TODO account for 0-rhymes
-# TODO account for URL does not exist
+# 	- currently return None
+# 	- cases where words only have an "initial" (langs other than EN?)
 
 class RhymeAPI:
 	url = "https://api.datamuse.com"
@@ -11,9 +13,9 @@ class RhymeAPI:
 	soundslike = "/words?sl="					# words with similar sound
 	spelledlike = "/words?sp=" 				# words with similar spelling
 	suggested = "/sug?s=" 						# word completion suggestions
-	
+	matched_words = {} 								# memo
+		
 	def __init__(self):
-		self.rhymed_words = []
 		self.matches = []
 
 	def reset_matches(self):
@@ -24,26 +26,31 @@ class RhymeAPI:
 		self.matches.append(match)
 		return True
 
-	def select_random_match(self):
-		if len(self.matches) > 0:
-			return random.choice(self.matches)
-		return None
-
 	def filter_single_syllable_rhymes(self, rhymes_dict):
 		for rhyme in rhymes_dict:
 			if rhyme['numSyllables'] == 1: self.add_match(rhyme['word'])
 		return None
 
-	def rhyme(self, word):
-		self.rhymed_words.append(word)
-		return fetchurl.fetchJSON(self.url+self.rhymeswith+word)
+	def select_random_match(self, word):
+		if len(self.matched_words[word]) > 0:
+			return random.choice(self.matched_words[word])
+		return None
+
+	def store_rhymes(self, word):
+		self.matched_words[word] = self.matches
+		return True
 
 	def single_syllable_rhyme(self, word):
 		self.reset_matches()
-		rhymes = self.rhyme(word)
-		self.filter_single_syllable_rhymes(rhymes)
-		syll_rhyme = self.select_random_match()
+		if word not in self.matched_words:
+			rhymes = self.rhyme(word)
+			self.filter_single_syllable_rhymes(rhymes)
+			self.store_rhymes(word)
+		syll_rhyme = self.select_random_match(word)
 		return syll_rhyme
+
+	def rhyme(self, word):
+		return fetchurl.fetchJSON(self.url+self.rhymeswith+word)
 
 	def means_like(self, word):
 		return fetchurl.fetchJSON(self.url+self.meanslike+word)
