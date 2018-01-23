@@ -30,7 +30,7 @@ class InitialAPI:
 		word_initial = self.find_one_syllable_initial(phonemes)
 		# check target words for single-syllable words with matching initial
 		# TODO handle cases where target has no vowel
-		found_initial_match = ""
+		found_initial_match = None
 		with open(self.path, "r") as file:
 			for line in file:
 				line_items = line.split(" ")
