@@ -3,7 +3,7 @@ import random
 
 # TODO account for cases with 0 initial (only main vowel)
 # TODO account for searched headword not in dictionary
-# TODO account for 
+# TODO search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
 
 class InitialAPI:
 	matched_words = {} 			# memo

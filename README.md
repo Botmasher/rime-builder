@@ -1,6 +1,6 @@
 # Fanqie Rime Builder
 
-A simple program for exploring Qieyun-like fanqie rimes in Chinese and applying the same method to English.
+A tool for exploring Qieyun-style fanqie rimes in Chinese and applying the same method to one-syllable words in English.
 
 ## Background
 
@@ -18,17 +18,28 @@ This project is set up as a single Python package called `rimebuilder`. Here's a
 4. run `pip` to install the `rimebuilder` package: `pip3 install . --upgrade`
 5. run the installed package: `python3 rimebuilder`
 
-## Use
+## Using the Tools
 
-This tool has two uses:
-1. find a fanqie for a Chinese character
-2. build a fanqie-style reading for a one-syllable English word
+This project has two objectives:
+1. find any fanqie for a Chinese character
+2. build a fanqie reading for any single-syllable English word
 
-The first task accepts a Chinese character. It searches the character's entry on [Wiktionary](https://en.wiktionary.org/wiki/) for a traditional fanqie rhyme. If one is listed in the normal format, it reads and returns the two fanqie characters.
+To meet these two objectives, the project is divided into two subtools.
 
-The second task accepts an English term one syllable in length. It uses a fanqie-inspired method to propose an initial and a final that indicate a two-word fanqie reading for that English word. Examples allow for analysis a Western language using a tool native to Chinese linguistics. One potential benefit, and one that drove me to develop this tool, is the ability to understand the fanqie system "natively" for those outside of that linguistic tradition. Another is to draw insights from the results, if such a perspective shift could anything for non-Chinese phonology.
+### Chinese Fanqie Finder
+
+This subtool accepts a Chinese character. It searches the character's entry on [Wiktionary](https://en.wiktionary.org/wiki/) for a traditional fanqie rhyme. If one is listed in the normal format, it reads and returns the two fanqie characters.
+
+### English Fanqie Builder
+
+This subtool accepts an English term one syllable in length. It uses a fanqie-inspired method to propose an initial and a final that indicate a two-word fanqie reading for that English word. Examples allow for analysis a Western language using a tool native to Chinese linguistics. One potential benefit, and one that drove me to develop this tool, is the ability to understand the fanqie system "natively" for those outside of that linguistic tradition. Another is to draw insights from the results, if such a perspective shift could anything for non-Chinese phonology.
+
+## Contributing
+
+If you've used the tool and have ideas, bug fixes or enhancements in mind, you're a contributor! Whether you're programming, tinkering or just searching, if you've done some local testing and find ways to improve the tool, you're welcome to open an issue or a pull request. Please do document reproducible steps for fixes. Give as much relevant context as possible for enhancements.
 
 ## Insights & Adjustments
+
 Some thoughts from my experiments with the tool:
 - Collections of generated fanqie (larger sets instead of single searches) would help spot trends across the results.
 - Identifying multiple matches would provide more support for a term.

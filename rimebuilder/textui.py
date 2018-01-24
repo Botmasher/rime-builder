@@ -4,7 +4,9 @@
 
 kw_variants = {
 		'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"],
-		'quit': ["Q", "q", "QUIT", "Quit", "quit", "EXIT", "Exit", "exit"]
+		'quit': ["Q", "q", "QUIT", "Quit", "quit", "EXIT", "Exit", "exit"],
+		'1': ["1", "1.", "1)", "(1)", "1,"],
+		'2': ["2", "2.", "2)", "(2)", "2,"]
 	}
 
 def run_trad_fanqie(fanqie_rhymer):
@@ -38,6 +40,7 @@ def run_en_fanqie(initial_rhymer, final_rhymer):
 		print("The fanqie for your word is: %s, %s" % (initial.upper().split(" ")[0], rhyme.upper()))
 	else:
 		print("Could not build a fanqie for your word.")
+		print("It could be that I didn't recognize your word or that I think it has multiple syllables.")
 		print("You can try again though.")
 	reset = input("\nBuild another English fanqie? ")
 	if reset in kw_variants['yes']:
@@ -50,18 +53,18 @@ def select_subtool():
 	print("2 - fanqie finder for Chinese characters")
 	print("q - quit")
 	selected = input("1, 2 or q? ")
-	if selected not in ["1", "2", "q"]:
+	if selected not in kw_variants['1'] and selected not in kw_variants['2'] and selected not in kw_variants['quit']:
 		return select_subtool()
 	return selected
 
 def run_ui(fanqie_rhymer, initial_rhymer, final_rhymer):
 	print("\n-- Welcome to the FANQIE RIME BUILDER --")
-	print("\nFollow the Chinese linguistic tradition. Use it to take a different look at English pronunciation.")
-	selected = select_subtool()
-	if (selected in ["2", "2.", "2)"]):
-		run_trad_fanqie(fanqie_rhymer)
-	elif selected in ["1", "1.", "1)"]:
+	print("\Explore this Chinese linguistic tradition. Use it to take a different look at English pronunciation.")
+	selected_subtool = select_subtool()
+	if "1" in selected_subtool:
 		run_en_fanqie(initial_rhymer, final_rhymer)
+	elif "2" in selected_subtool:
+		run_trad_fanqie(fanqie_rhymer)
 	else:
 		print("Exiting...\n\n")
 		return None
