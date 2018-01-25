@@ -1,6 +1,7 @@
 # TODO account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
 # TODO handle illegal character input
 # TODO handle keyboard input interrupted
+# TODO disentangle passing around rhyme api objects from the ui
 
 kw_variants = {
 		'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"],
@@ -24,25 +25,29 @@ def run_trad_fanqie(fanqie_rhymer):
 		return run_trad_fanqie(fanqie_rhymer)
 	return None	
 
-def run_en_fanqie(initial_rhymer, final_rhymer):
+def run_en_fanqie(english_fanqieizer):
 	print("\n--- English Fanqie Builder ---")
 	print("This tool analyzes the phonology of basic English words using a fanqie-style method.")
 	print("Type a one syllable word. I will build an initial and final rhyme for you.\n")
 	word = input("A single syllable word: ")
 	print("Rhyming from front to back . . .")
-	rhyme = final_rhymer.single_syllable_rhyme(word)
-	initial = initial_rhymer.rhyme_initial(word)
-	if rhyme is not None and initial is not None:
+	#final = english_fanqieizer.single_syllable_rhyme(word)
+	#initial = english_fanqieizer.rhyme_initial(word)
+	rimeset = english_fanqieizer.rhyme_both(word)
+	initial = rimeset['initial'][0]
+	final = rimeset['final'][0]
+	print(rimeset)
+	if final is not None and initial is not None:
 		initial = initial.lower()
-		print("\nYour word has the same initial as: %s\nYour word has the same final as: %s" % (initial, rhyme))
-		print("The fanqie for your word is: %s, %s" % (initial.upper().split(" ")[0], rhyme.upper()))
+		print("\nYour word has the same initial as: %s\nYour word has the same final as: %s" % (initial, final))
+		print("The fanqie for your word is: %s, %s" % (initial.upper().split()[0], final.upper()))
 	else:
 		print("Could not build a fanqie for your word.")
 		print("It could be that I didn't recognize your word or that I think it has multiple syllables.")
 		print("You can try again though.")
 	reset = input("\nBuild another English fanqie? ")
 	if reset in kw_variants['yes']:
-		return run_en_fanqie(initial_rhymer, final_rhymer)
+		return run_en_fanqie(english_fanqieizer)
 	return None
 
 def select_subtool():
@@ -55,19 +60,19 @@ def select_subtool():
 		return select_subtool()
 	return selected
 
-def run_ui(fanqie_rhymer, initial_rhymer, final_rhymer):
+def run_ui(fanqie_rhymer, english_fanqieizer):
 	print("\n-- Welcome to the FANQIE RIME BUILDER --")
 	print("Explore this Chinese linguistic tradition. Use it to take a different look at English pronunciation.")
 	selected_subtool = select_subtool()
 	if "1" in selected_subtool:
-		run_en_fanqie(initial_rhymer, final_rhymer)
+		run_en_fanqie(english_fanqieizer)
 	elif "2" in selected_subtool:
-		run_trad_fanqie(fanqie_rhymer)
+		run_trad_fanqie(fanqie_finder)
 	else:
-		print("Exiting...\n")
+		print("\nExiting...\n")
 		return None
 	reset = input("\nExit the Fanqie program? ")
 	if reset not in kw_variants['yes'] and reset not in kw_variants['quit']:
-		return run_ui(fanqie_rhymer, initial_rhymer, final_rhymer)
-	print("Exiting...\n")
+		return run_ui(fanqie_rhymer, english_fanqieizer)
+	print("\nExiting...\n")
 	return None

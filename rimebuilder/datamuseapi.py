@@ -6,7 +6,7 @@ import random
 # 	- currently return None
 # 	- cases where words only have an "initial" (langs other than EN?)
 
-class RhymeAPI:
+class DatamuseAPI:
 	url = "https://api.datamuse.com"
 	rhymeswith = "/words?rel_rhy="		# words that rhyme
 	meanslike = "/words?ml="					# words with similar meaning
