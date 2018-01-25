@@ -38,15 +38,6 @@ This subtool accepts an English term one syllable in length. It uses a fanqie-in
 
 If you've used the tool and have ideas, bug fixes or enhancements in mind, you're a contributor! Whether you're programming, tinkering or just searching, if you've done some local testing and find ways to improve the tool, you're welcome to open an issue or a pull request. Please do document reproducible steps for fixes. Give as much relevant context as possible for enhancements.
 
-## Insights & Adjustments
-
-Some thoughts from my experiments with the tool:
-- Collections of generated fanqie (larger sets instead of single searches) would help spot trends across the results.
-- Identifying multiple matches would provide more support for a term.
-- In line with what I've read about historical Chinese phonology, English results are coherent but do not correspond to phonemes. It seems this method would require chaining and scale to build a case for English phonology, as was done for Middle Chinese.
-- Why no helpful negative examples, like the "thing" vs "this" above?
-- Fanqie entries have peculiar formatting in Chinese manuscripts, both internally and with respect to other entries. Any interesting results from parallelling these?
-
 ## Source code
 
 This project is primarily developed in Python. The main `rimebuilder` Python package makes API calls to [datamuse](https://www.datamuse.com/api/) for final rhymes and reads the [CMU speech dictionary](http://www.speech.cs.cmu.edu/cgi-bin/cmudict) to find initial rhymes. The initial development was in C++ but shifted to Python for ease of making web requests.
