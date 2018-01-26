@@ -34,13 +34,12 @@ def run_en_fanqie(english_fanqieizer):
 	#final = english_fanqieizer.single_syllable_rhyme(word)
 	#initial = english_fanqieizer.rhyme_initial(word)
 	rimeset = english_fanqieizer.rhyme_both(word)
-	initial = rimeset['initial'][0]
-	final = rimeset['final'][0]
-	print(rimeset)
-	if final is not None and initial is not None:
-		initial = initial.lower()
-		print("\nYour word has the same initial as: %s\nYour word has the same final as: %s" % (initial, final))
-		print("The fanqie for your word is: %s, %s" % (initial.upper().split()[0], final.upper()))
+	if rimeset is not None and 'initial' in rimeset and 'final' in rimeset:
+		initial = rimeset['initial']
+		final = rimeset['final']
+		vowel = " (initial vowel/glottal)" if rimeset['vowel'] else ""
+		print("\nYour word has the same initial as: %s%s\nYour word has the same final as: %s" % (initial, vowel, final))
+		print("The fanqie for your word is: %s, %s" % (initial.upper(), final.upper()))
 	else:
 		print("Could not build a fanqie for your word.")
 		print("It could be that I didn't recognize your word or that I think it has multiple syllables.")
