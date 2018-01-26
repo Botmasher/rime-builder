@@ -23,15 +23,16 @@
 
 ### Rime analysis
 - [ ] account for 0-rhymes
-- [ ] currently return None
+- handling vowels
+	- [ ] cases where vowel-only syllable matches to an initial and final, e.g. "a"
+	- [ ] better ways to handle zero initial (first phone is main vowel)
 - [ ] cases where words only have an "initial" (langs other than EN?)
-- [ ] account for cases with 0 initial (only main vowel)
 - [ ] account for searched headword not in dictionary
 - [ ] search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
 
 ## Experiments
-- [X] branch out `localrhymes`
-	- build both initial and rhyme matches entirely from phone dict
+- [X] `localrhymes` branch
+	- [X] build both initial and rhyme matches entirely from phone dict
 
 ## Potential Upgrades
 - Some thoughts from my experiments with the tool:
