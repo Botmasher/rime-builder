@@ -1,18 +1,14 @@
 import os
 import random
 
-# TODO account for cases with 0 initial (only main vowel)
-# TODO account for searched headword not in dictionary
 # TODO search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
 
 class InitialAPI:
-	# check for initial vowel
-	is_vowel = False
 	vowel_tag = "{$VOWEL}" 	# match without linear vowel search 
 	vowels = []
 	# memoize
-	matched_words = {}
-	matched_initials = {} 	# implement broader association from initials to matching words
+	initials_per_word = {}	# associate each word with its initial
+	words_per_initial = {} 	# associate each initial with a list of words
 	
 	def __init__(self, dict_dir, dict_file):
 		self.matches = []
@@ -37,10 +33,12 @@ class InitialAPI:
 			if char in punctuation: return False
 		return True
 
-	def select_random_match(self, word):
-		if len(self.matched_words[word]) > 0:
-			return random.choice(self.matched_words[word])
-		return None
+	def select_random_match(self, initial, word, timeout=999):
+		if timeout < 1 or len(self.words_per_initial[initial]) < 1:
+			return None
+		match = random.choice(self.words_per_initial[initial])
+		if match != word: return match
+		return self.select_random_match(initial, word, timeout-1)
 
 	def add_match(self, match):
 		self.matches.append(match)
@@ -50,8 +48,9 @@ class InitialAPI:
 		self.matches = []
 		return True
 
-	def store_matches(self, word):
-		self.matched_words[word] = self.matches
+	def store_matches(self, word, initial):
+		self.initials_per_word[word] = initial
+		self.words_per_initial[initial] = self.matches
 		return True
 
 	def trim_syllable_to_initial(self, phonemes):
@@ -65,7 +64,7 @@ class InitialAPI:
 			return None
 		# zero consonant initial
 		if phonemes.index(vowels[0]) == 0:
-			return self.vowel_tag
+			return [self.vowel_tag]
 		# cut at first vowel
 		initial = phonemes[0:phonemes.index(vowels[0])]
 		return initial
@@ -85,11 +84,9 @@ class InitialAPI:
 				line_phonemes = line_items[2:]
 				line_initial = self.trim_syllable_to_initial(line_phonemes)
 				# search valid entries for a match
-				if line[:3] != ";;;" and line_initial and line_initial == word_initial:
-					if line_initial == self.vowel_tag: self.is_vowel = True
-					is_pretty_word = self.check_for_pretty_word(line_word)
-					if is_pretty_word: self.add_match(line_items[0])
-		return None
+				if line_initial and line_initial == word_initial:
+					self.check_for_pretty_word(line_word) and self.add_match(line_items[0])
+		return word_initial
 
 	def transliterate_word(self, word):
 		"""
@@ -106,17 +103,18 @@ class InitialAPI:
 
 	def find_and_store_matches(self, word):
 		word_phonemes = self.transliterate_word(word)
-		self.find_matches(word_phonemes)
-		self.store_matches(word)
+		if word not in self.initials_per_word:
+			word_initial = self.find_matches(word_phonemes)
+			word_initial is not None and self.store_matches(word, " ".join(word_initial))
 		return True
 
 	def rhyme_initial(self, word):
 		self.reset_matches()
-		self.is_vowel = False
 		# memoization for searched initial rhymes
-		if word not in self.matched_words:
-			self.find_and_store_matches(word)
-		match = self.select_random_match(word)
-		if match and self.is_vowel:
+		word not in self.initials_per_word and self.find_and_store_matches(word)
+		if word not in self.initials_per_word: return None
+		initial = self.initials_per_word[word]
+		match = self.select_random_match(initial, word)
+		if match is not None and initial == self.vowel_tag:
 			return "%s%s" % (match, " (initial vowel/glottal)")
 		return match
