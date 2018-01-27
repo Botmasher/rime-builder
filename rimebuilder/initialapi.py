@@ -6,15 +6,29 @@ import random
 # TODO search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
 
 class InitialAPI:
-	matched_words = {} 			# memo
-	vowel_tag = "{$VOWELS}"
+	# check for initial vowel
 	is_vowel = False
-
-	def __init__(self, path, file):
+	vowel_tag = "{$VOWEL}" 	# match without linear vowel search 
+	vowels = []
+	# memoize
+	matched_words = {}
+	matched_initials = {} 	# implement broader association from initials to matching words
+	
+	def __init__(self, dict_dir, dict_file):
 		self.matches = []
-		self.path = os.path.join(os.getcwd(), path, file)
-		# TODO fetch vowels from CMU: http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b.phones
-		self.vowels = ["AA", "AE", "AH", "AO", "AW", "AY", "EH", "ER", "EY", "IH", "IY", "OW", "OY", "UH", "UW"]
+		self.dict_path = self.join_path(dict_dir, dict_file)
+		self.vowels_path = self.join_path(dict_dir, "cmudict-0.7b.phones")
+		self.load_vowels(self.vowels_path)
+
+	def join_path(self, path, file_name):
+		return os.path.join(os.getcwd(), path, file_name)
+
+	def load_vowels(self, path):
+		with open(path, "r") as file:
+			for line in file:
+				phone, feature = line.split()
+				feature == "vowel" and self.vowels.append(phone)
+		return True
 
 	def check_for_pretty_word(self, word):
 		punctuation = [".", ":", ";", "!", "?", "*", "(", ")", ",", "'", "/", "*", "$", "#", "@"]
@@ -64,7 +78,7 @@ class InitialAPI:
 		word_initial = self.trim_syllable_to_initial(phonemes)
 		# check target words for single-syllable words with matching initial
 		# TODO handle cases where target has no vowel
-		with open(self.path, "r") as file:
+		with open(self.dict_path, "r") as file:
 			for line in file:
 				line_items = line.split(" ")
 				line_word = line_items[0]
@@ -84,7 +98,7 @@ class InitialAPI:
 		"""
 		word_phonemes = []
 		capsed_word = word.upper() 						# resource headwords are all uppercase
-		with open(self.path, "r") as file:
+		with open(self.dict_path, "r") as file:
 			for line in file:
 				if line.split(" ")[0] == capsed_word:
 					word_phonemes = line.split(" ")[2:]
