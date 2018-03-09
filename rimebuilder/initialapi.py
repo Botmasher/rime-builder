@@ -1,7 +1,6 @@
 import os
 import random
-
-# TODO search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
+import re
 
 class InitialAPI:
 	vowel_tag = "{$VOWEL}" 	# match without linear vowel search 
@@ -97,8 +96,15 @@ class InitialAPI:
 		capsed_word = word.upper() 						# resource headwords are all uppercase
 		with open(self.dict_path, "r") as file:
 			for line in file:
-				if line.split(" ")[0] == capsed_word:
-					word_phonemes = line.split(" ")[2:]
+				headword = line.split(" ")[0]
+				# CMU headwords ending in homonym count
+				if re.match(r".*\([0-9]+\)", headword): headword = headword.split("(")[0]
+				# match given word to headword
+				if capsed_word == headword:
+					candidate_phonemes = line.split(" ")[2:]
+					vowels = [s for s in candidate_phonemes if s[:2] in self.vowels]
+					# one syllable
+					if vowels != [] and len(vowels) == 1: return candidate_phonemes
 		return word_phonemes
 
 	def find_and_store_matches(self, word):

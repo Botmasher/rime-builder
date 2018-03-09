@@ -19,15 +19,16 @@
 - [ ] account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
 - [ ] disentangle passing around api objects within the ui
 - [ ] handle url/file not found
-- [ ] switching between CMU vs datamuse if have internet connection
+- [ ] switch between CMU vs datamuse if have internet connection
 
 ### Rime analysis
-- [ ] account for 0-rhymes
+- [ ] look up a word given EN fanqie input, e.g. "write lede" returns "read"
+- [X] account for 0-rhymes
 - handling vowels
-	- [ ] cases where vowel-only syllable matches to an initial and final, e.g. "a"
+	- [X] cases where vowel-only syllable matches to an initial and final, e.g. "a"
 	- [ ] better ways to handle zero initial (first phone is main vowel)
 - [ ] cases where words only have an "initial" (langs other than EN?)
-- [ ] account for searched headword not in dictionary
+- [X] account for searched headword not in dictionary
 - [ ] search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
 
 ## Experiments
