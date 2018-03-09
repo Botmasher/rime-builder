@@ -7,7 +7,8 @@ kw_variants = {
 	'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"],
 	'quit': ["Q", "q", "QUIT", "Quit", "quit", "EXIT", "Exit", "exit"],
 	'1': ["1", "1.", "1)", "(1)", "1,"],
-	'2': ["2", "2.", "2)", "(2)", "2,"]
+	'2': ["2", "2.", "2)", "(2)", "2,"],
+	'3': ["3", "3.", "3)", "(3)", "3,"]
 }
 
 def lookup_rhymes(word, initial_rhymer, final_rhymer, word_lookup, counter=10):
@@ -65,14 +66,39 @@ def run_en_fanqie(initial_rhymer, final_rhymer, word_lookup):
 		return run_en_fanqie(initial_rhymer, final_rhymer, word_lookup)
 	return None
 
+def run_en_reverse_fanqie(initial_rhymer, word_lookup):
+	"""Text interface for the English fanqie initial rhymer and final rhymer"""
+	print("\n--- English Fanqie Reverser ---")
+	print("This tool takes a fanqie-style rime and looks up a matching word.")
+	print("Type two one-syllable words. I will find a word matching the first word's initial and the second word's final.\n")
+	upper_word = input("Upper word (initial match): ")
+	lower_word = input("Lower word (final match): ")
+	print("Rhyming from top to bottom . . .")
+	is_upper_word = word_lookup.is_word(upper_word)
+	is_lower_word = word_lookup.is_word(lower_word)
+	rhyme = None
+	if is_upper_word and is_lower_word:
+		rhyme = initial_rhymer.reverse_fanqie(upper_word, lower_word)
+	if rhyme is not None:
+		print("\nThe fanqie for your word: %s. %s, %s" % (rhyme, upper_word.upper(), lower_word.upper()))
+	else:
+		print("Could not find a word for your a fanqie.")
+		print("It could be that I didn't recognize one of your words or that I think they have multiple syllables.")
+		print("You can try again though.")
+	reset = input("\nFind another reverse English fanqie? ")
+	if reset in kw_variants['yes']:
+		return run_en_reverse_fanqie(initial_rhymer, word_lookup)
+	return None
+
 def select_subtool():
 	"""Text interface for the tool select menu"""
 	print("\n  Choose a tool:")
 	print("  1 - fanqie rhyme builder for English words")
 	print("  2 - fanqie finder for Chinese characters")
+	print("  3 - fanqie reverser for English")
 	print("  q - quit")
-	selected = input("\n  1, 2 or q? ")
-	if selected not in kw_variants['1'] and selected not in kw_variants['2'] and selected not in kw_variants['quit']:
+	selected = input("\n  1, 2, 3 or q? ")
+	if selected not in kw_variants['1'] and selected not in kw_variants['2'] and selected not in kw_variants['3'] and selected not in kw_variants['quit']:
 		return select_subtool()
 	return selected
 
@@ -85,6 +111,8 @@ def run_ui(fanqie_rhymer, initial_rhymer, final_rhymer, word_lookup):
 		run_en_fanqie(initial_rhymer, final_rhymer, word_lookup)
 	elif "2" in selected_subtool:
 		run_trad_fanqie(fanqie_rhymer)
+	elif "3" in selected_subtool:
+		run_en_reverse_fanqie(initial_rhymer, word_lookup)
 	else:
 		print("Exiting...\n")
 		return None

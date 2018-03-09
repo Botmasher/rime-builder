@@ -52,22 +52,6 @@ class InitialAPI:
 		self.words_per_initial[initial] = self.matches
 		return True
 
-	def trim_syllable_to_initial(self, phonemes):
-		"""
-		Input:	sequential list of phonemes in a single word
-		Return: sequential list of only phonemes in the word's initial
-		"""
-		vowels = [s for s in phonemes if s[:2] in self.vowels]
-		# not one syllable
-		if vowels == [] or len(vowels) > 1:
-			return None
-		# zero consonant initial
-		if phonemes.index(vowels[0]) == 0:
-			return [self.vowel_tag]
-		# cut at first vowel
-		initial = phonemes[0:phonemes.index(vowels[0])]
-		return initial
-
 	def find_matches(self, phonemes):
 		"""
 		Input: 	sequential list of phonemes in a single word
@@ -113,6 +97,74 @@ class InitialAPI:
 			word_initial = self.find_matches(word_phonemes)
 			word_initial is not None and self.store_matches(word, " ".join(word_initial))
 		return True
+
+	def get_syllable_vowels(self, phonemes):
+		"""Build list of vowels in a syllable"""
+		vowels = [s for s in phonemes if s[:2] in self.vowels]
+		# not one syllable
+		if vowels == [] or len(vowels) > 1:
+			return None
+		return vowels
+
+	def trim_syllable_to_initial(self, phonemes):
+		"""
+		Input:	sequential list of phonemes in a single word
+		Return: sequential list of phonemes only in the word's initial
+		"""
+		vowels = self.get_syllable_vowels(phonemes)
+		if vowels is None: return None
+		# zero consonant initial
+		if phonemes.index(vowels[0]) == 0:
+			return [self.vowel_tag]
+		# cut at first vowel
+		initial = phonemes[0:phonemes.index(vowels[0])]
+		return initial
+
+	def trim_syllable_to_final(self, phonemes):
+		"""
+		Input:	sequential list of phonemes in a single word
+		Return: sequential list of phonemes only in the word's final
+		"""
+		vowels = self.get_syllable_vowels(phonemes)
+		if vowels is None: return None
+		final = phonemes[phonemes.index(vowels[0]):]
+		return final
+
+	def find_reverse_fanqie(self, upper_phonemes, lower_phonemes):
+		"""Find reverse fanqie rhyme words whose initials match upper and finals match lower"""
+		potential_words = {}
+		upper_initial = self.trim_syllable_to_initial(upper_phonemes)
+		lower_final = self.trim_syllable_to_final(lower_phonemes)
+		
+		# TODO check self.words_per_initial memo first
+
+		# store all initial matches
+		with open(self.dict_path, "r") as file:
+			for line in file:
+				line_items = line.split(" ")
+				line_word = line_items[0]
+				line_phonemes = line_items[2:]
+				line_initial = self.trim_syllable_to_initial(line_phonemes)
+				# search valid entries for a match
+				if line_initial and line_initial == upper_initial and self.check_for_pretty_word(line_word):
+					potential_words[line_word] = line_phonemes
+		if len(potential_words) < 1: return None
+		# narrow down final matches
+		matches = []
+		for word in potential_words:
+			if lower_final == self.trim_syllable_to_final(potential_words[word]):
+				matches.append(word)
+		return matches
+
+	def reverse_fanqie(self, upper_word, lower_word):
+		"""Find and select one word with the same initial as upper and final as lower"""
+		upper_phonemes = self.transliterate_word(upper_word)
+		lower_phonemes = self.transliterate_word(lower_word)
+		matches = self.find_reverse_fanqie(upper_phonemes, lower_phonemes)
+		if matches is not None and len(matches) > 0:
+			return random.choice(matches)
+		else:
+			return None
 
 	def rhyme_initial(self, word):
 		self.reset_matches()
