@@ -1,0 +1,45 @@
+# TODO List
+
+## Basic tool
+- [X] create a prototype that achieves README goals
+	- [X] fetch rhymes through datamuse API
+	- [X] store and search CMU dict for initials
+	- [X] fetch traditional fanqie
+	- [X] calculate and display initial and final matches for an English word
+	- [X] parse and display initial and final Chinese character
+- [X] update README.md to reflect prototype development
+
+## Fixes and adjustments
+
+### User input
+- [ ] handle illegal character input
+- [ ] handle keyboard input interrupted
+
+### Data and API
+- [ ] account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
+- [ ] disentangle passing around api objects within the ui
+- [ ] handle url/file not found
+- [ ] switch between CMU vs datamuse if have internet connection
+
+### Rime analysis
+- [ ] look up a word given EN fanqie input, e.g. "write lede" returns "read"
+- [X] account for 0-rhymes
+- handling vowels
+	- [X] cases where vowel-only syllable matches to an initial and final, e.g. "a"
+	- [ ] repair vowel-initial (e.g. "our") and vowel-only (e.g. "a") not finding good matches
+	- [ ] better ways to handle zero initial (first phone is main vowel)
+- [ ] cases where words only have an "initial" (langs other than EN?)
+- [X] account for searched headword not in dictionary
+- [X] search through multisyllabic rhymes for a one syllable variant, e.g. OUR OUR(1) OUR(2) in CMUdict
+
+## Experiments
+- [X] `localrhymes` branch
+	- [X] build both initial and rhyme matches entirely from phone dict
+
+## Potential Upgrades
+- Some thoughts from my experiments with the tool:
+	- Collections of generated fanqie (larger sets instead of single searches) would help spot trends across the results.
+	- Identifying multiple matches would provide more support for a term.
+	- In line with what I've read about historical Chinese phonology, English results are coherent but do not correspond to phonemes. It seems this method would require chaining and scale to build a case for English phonology, as was done for Middle Chinese.
+	- Why no helpful negative examples, like the "thing" vs "this" above?
+	- Fanqie entries have peculiar formatting in Chinese manuscripts, both internally and with respect to other entries. Any interesting results from parallelling these?
