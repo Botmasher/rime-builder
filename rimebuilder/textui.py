@@ -1,9 +1,20 @@
 import re
+import wordlookupapi
 
+# TODO check that input has one syllable
 # TODO account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
 # TODO handle illegal character input
 # TODO handle keyboard input interrupted
 # TODO disentangle passing around rhyme api objects from the ui
+
+word_lookup = wordlookupapi.WordLookupAPI()
+def lookup_word(word, attempts=10):
+	print("Looking for your word in my dictionary (%s tries)" % attempts)
+	if word_lookup.is_word(word):
+		print("Found it!")
+		return True
+	if attempts > 1: lookup_word(word, attempts-1)
+	return False
 
 kw_variants = {
 		'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"],
@@ -31,11 +42,10 @@ def run_en_fanqie(english_fanqieizer):
 	print("This tool analyzes the phonology of basic English words using a fanqie-style method.")
 	print("Type a one syllable word. I will build an initial and final rhyme for you.\n")
 	word = input("A single syllable word: ")
-	print("Rhyming from front to back . . .")
-	#final = english_fanqieizer.single_syllable_rhyme(word)
-	#initial = english_fanqieizer.rhyme_initial(word)
+	is_word = lookup_word(word)
 	rimeset = english_fanqieizer.rhyme_both(word)
-	if rimeset is not None and 'initial' in rimeset and 'final' in rimeset:
+	if is_word and rimeset is not None and 'initial' in rimeset and 'final' in rimeset:
+		print("Rhyming from front to back . . .")
 		initial = rimeset['initial']
 		final = rimeset['final']
 		vowel = " (initial vowel/glottal)" if rimeset['vowel'] else ""
@@ -87,7 +97,7 @@ def run_ui(fanqie_rhymer, english_fanqieizer):
 	if "1" in selected_subtool:
 		run_en_fanqie(english_fanqieizer)
 	elif "2" in selected_subtool:
-		run_trad_fanqie(fanqie_finder)
+		run_trad_fanqie(fanqie_rhymer)
 	elif "3" in selected_subtool:
 		run_en_reverser(english_fanqieizer)
 	else:
