@@ -24,15 +24,11 @@ def lookup_word(word):
 
 def lookup_rhymes(word, english_fanqieizer, attempts=10):
 	"""Find initial and final rhymes, verify that they are normal words, try again if not"""
-	if attempts <= 0:
-		return {'initial': None, 'final': None}
+	if attempts <= 0: return None
 	rimeset = english_fanqieizer.rhyme_both(word)
 	if rimeset is not None:
-		initial, final = rimeset
-		#is_word_initial = "Yes" if word_lookup.is_word(initial) else "No"
-		#is_word_final = "Yes" if word_lookup.is_word(final) else "No"
-		if word_lookup.is_word(final) and word_lookup.is_word(initial):
-			return {'initial': initial, 'final': final}
+		if word_lookup.is_word(rimeset['initial']) and word_lookup.is_word(rimeset['final']):
+			return rimeset
 	print("Did not find a good match. Trying again (%s retries)..." % attempts)
 	return lookup_rhymes(word, english_fanqieizer, attempts-1)
 

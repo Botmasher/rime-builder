@@ -11,9 +11,18 @@
 
 ## Fixes and adjustments
 
-### User input
+### File specific
+- [ ] move or repeat TODOS from files here
+	- [ ] browse `rimebuilder/` files for local TODOS
+	- [ ] place each of those TODOS in this list
+	- [ ] format each entry with `path/filename (ln)`: `todo_txt`
+		- where `todo_txt` is the string after `# TODO `
+		- and where `(ln)` is the optional line number (if TODO is tied to a specific line)
+
+### UI and input
 - [ ] handle illegal character input
 - [ ] handle keyboard input interrupted
+- [ ] better encapsulation of ui pieces to streamline calls, reloads and flow between pieces
 
 ### Data and API
 - [ ] account for zero returns (incl word==""), zero-rhyme returns, zero-initial or vowel-initial returns from API
@@ -22,7 +31,7 @@
 - [ ] switch between CMU vs datamuse if have internet connection
 
 ### Rime analysis
-- [ ] look up a word given EN fanqie input, e.g. "write lede" returns "read"
+- [X] look up a word given EN fanqie input, e.g. "write lede" returns "read"
 - [X] account for 0-rhymes
 - handling vowels
 	- [X] cases where vowel-only syllable matches to an initial and final, e.g. "a"
@@ -35,6 +44,7 @@
 ## Experiments
 - [X] `localrhymes` branch
 	- [X] build both initial and rhyme matches entirely from phone dict
+	- [X] merge into master
 
 ## Potential Upgrades
 - Some thoughts from my experiments with the tool:
