@@ -31,9 +31,15 @@
 - [ ] switch between CMU vs datamuse if have internet connection
 
 ### Rime analysis
+- [ ] keep reverser from returning identical matches, e.g. "are are" will return "our" but not "are"
+- [ ] more thorough word lookups
+	- [ ] is the word obsolete?
+	- [ ] does the word have a different pronunciation than suggested by `cmuapi`?
+	- [ ] use the `datamuseapi` tool to double check rhymes
+- [ ] handle initial vowels in reverser, e.g. "ace cat" returns "at"
 - [X] look up a word given EN fanqie input, e.g. "write lede" returns "read"
 - [X] account for 0-rhymes
-- handling vowels
+- handling vowels in the rhymer/fanqieizer
 	- [X] cases where vowel-only syllable matches to an initial and final, e.g. "a"
 	- [ ] repair vowel-initial (e.g. "our") and vowel-only (e.g. "a") not finding good matches
 	- [ ] better ways to handle zero initial (first phone is main vowel)

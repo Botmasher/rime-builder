@@ -10,7 +10,7 @@ import wordlookupapi
 kw_variants = {
 	'yes': ["Yes", "yes", "YES", "Y", "y", "ok", "OK", "Ok"], 'no': ["No", "no", "NO", "N", "n"],
 	'quit': ["Q", "q", "QUIT", "Quit", "quit", "EXIT", "Exit", "exit"],
-	'#': r"[(]?[0-9][.),]?"
+	'#': r"[(]?[1-3][.),]?"
 }
 # TODO hold good initials or finals through when found in lookup_rhymes
 
@@ -102,7 +102,7 @@ def select_subtool():
 	print("  q - quit")
 	selected = input("\n  1, 2 or q? ")
 	if not re.match(kw_variants['#'], selected) and selected not in kw_variants['quit']:
-		print("I did not recognize your input.")
+		print("\n  I did not recognize your input.")
 		return select_subtool()
 	return selected
 
