@@ -1,12 +1,7 @@
 import fetchurl
 import random
 
-# TODO handle URL does not exist
-# TODO account for 0-rhymes
-# 	- currently return None
-# 	- cases where words only have an "initial" (langs other than EN?)
-
-class RhymeAPI:
+class DatamuseAPI:
 	url = "https://api.datamuse.com"
 	rhymeswith = "/words?rel_rhy="		# words that rhyme
 	meanslike = "/words?ml="					# words with similar meaning
