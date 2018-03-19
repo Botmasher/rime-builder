@@ -58,21 +58,17 @@ class LocalEnglishRimeAPI:
 		"""Retrieve one stored word rhyming with this initial"""
 		match = self.select_random_match(self.matched_initials[phones])[0]
 		if match != word:
-			print("liked %s!" % match)
 			return match
-		if len(self.matched_initials[phones]) <= 1: return None
-		print("did NOT like %s..." % match)
+		if len(self.matched_initials[phones]) <= 1:
+			return None
 		return self.select_random_initial_match(word, phones)
 
 	def select_random_final_match(self, word, phones):
 		"""Retrieve one stored word rhyming with this final"""
 		match = self.select_random_match(self.matched_finals[phones])[0]
-		print("found %s" % match)
 		if match != word:
-			print("liked %s!" % match)
 			return match
 		if len(self.matched_finals[phones]) <= 1: return None
-		print("did NOT like %s..." % match)
 		return self.select_random_final_match(word, phones)
 
 	def add_initial_match(self, phones_list, word):
@@ -136,8 +132,8 @@ class LocalEnglishRimeAPI:
 
 				# search valid entries for a match and store good matches
 				line_initial, line_final = line_rimeset
-				line_initial == word_initial and self.add_initial_match(line_initial, line_word) and print("Added %s as initial match" % line_word)
-				line_final == word_final and self.add_final_match(line_final, line_word) and print("Added %s as final match" % line_word)
+				line_initial == word_initial and self.add_initial_match(line_initial, line_word)
+				line_final == word_final and self.add_final_match(line_final, line_word)
 		return None
 
 	def transliterate_word(self, headword):
