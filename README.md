@@ -4,7 +4,7 @@ A tool for exploring Qieyun-style fanqie rimes in Chinese and applying the same 
 
 ## Background
 
-While preparing a project on the linguistic history of Chinese, I read hundreds of pages that focused on analyzing, explaining and reconstructing words with the Fanqie rhyming tradition. This unique system condenses the key phonological insights of Chinese linguistics, which contended with an interesting problem: how to represent Chinese phonology using a complex, non-alphabetic writing system. Instead of an alphabet or phonetic transcription, Chinese scholars had access to sound-alike characters. For any syllable, a fanqie entry lists a "top term" with the same initial reading and a "bottom term" with the same final reading.
+While preparing a project on the linguistic history of Chinese, I read hundreds of pages that focused on analyzing, explaining and reconstructing words with the fanqie rhyming tradition. This unique system condenses the key phonological insights of Chinese linguistics, which contended with an interesting problem: how to represent Chinese phonology using a complex, non-alphabetic writing system. Instead of an alphabet or phonetic transcription, Chinese scholars had access to sound-alike characters. For any syllable, a fanqie entry lists a "top term" with the same initial reading and a "bottom term" with the same final reading.
 
 Take one an example from early rime dictionaries. The character 韻 means "rhyme". Many centuries ago, the pronunciation for that character was given with the following fanqie:
 
@@ -15,9 +15,9 @@ Take one an example from early rime dictionaries. The character 韻 means "rhyme
 切
 ```
 
-This reading contains the headword 韻 and its pronunciation 王問切. In the fanqie pronunciation, 王 is the upper character or final rhyme, and 問 is the lower character or final rhyme. The last character, 切, indicates that this is a fanqie reading. This reading is simplified to avoid the complexities of the actual [entry structure](https://commons.wikimedia.org/wiki/File:Qieyun_Dong_entry_fanqie.svg) and [dictionary structure](http://www.academia.edu/2261552/Introduction_to_Chinese_historical_phonology) (pages 6-7).
+This reading contains the headword 韻 and its pronunciation 王問切. In the fanqie pronunciation, 王 is the upper character for the initial rhyme, and 問 is the lower character for the final rhyme. The last character, 切, indicates that this is a fanqie reading. This reading is simplified to avoid the complexities of the actual [entry structure](https://commons.wikimedia.org/wiki/File:Qieyun_Dong_entry_fanqie.svg) and [dictionary structure](http://www.academia.edu/2261552/Introduction_to_Chinese_historical_phonology) (pages 6-7).
 
-I wondered how English might look if analyzed using this method. For example, "thumb" shares an initial with "thing" (not "this") and a final with "sum", so one fanqie for "thumb" is "thing sum". Similarly, "write" could yield "reed" and "height". That curiosity led me to build this tool for exploring initial and final rhymes using Fanqie.
+I wondered how English might look if analyzed using fanqie. This method uses coarser grains than the standard approach, which has been to transcribe pronunciation using a segmental system like IPA. For example, the word "thumb" is typically represented as `/θʌm/`. By contrast, using fanqie, "thumb" shares an initial with "thing" (not "this") and a final with "sum", so "thumb" can be respresented as `THING SUM`. Similarly, "write" could yield "reed" and "height". Curiosity about these different approaches led me to build this tool for exploring initial and final rhymes using fanqie.
 
 ## Getting Started
 
