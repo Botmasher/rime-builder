@@ -57,7 +57,7 @@ class LocalEnglishRimeAPI:
 	def select_random_initial_match(self, word, phones):
 		"""Retrieve one stored word rhyming with this initial"""
 		match = self.select_random_match(self.matched_initials[phones])[0]
-		if match != word:
+		if match.lower() != word.lower():
 			return match
 		if len(self.matched_initials[phones]) <= 1:
 			return None
@@ -66,7 +66,7 @@ class LocalEnglishRimeAPI:
 	def select_random_final_match(self, word, phones):
 		"""Retrieve one stored word rhyming with this final"""
 		match = self.select_random_match(self.matched_finals[phones])[0]
-		if match != word:
+		if match.lower() != word.lower():
 			return match
 		if len(self.matched_finals[phones]) <= 1: return None
 		return self.select_random_final_match(word, phones)

@@ -56,9 +56,9 @@ def run_en_fanqie(english_fanqieizer):
 	word = input("A single syllable word: ")
 	is_word = lookup_word(word)
 	if is_word:
+		print("Rhyming from front to back . . .")
 		rimeset = lookup_rhymes(word, english_fanqieizer)
 	if is_word and rimeset is not None and 'initial' in rimeset and 'final' in rimeset:
-		print("Rhyming from front to back . . .")
 		initial = rimeset['initial']
 		final = rimeset['final']
 		vowel = " (initial vowel/glottal)" if rimeset['vowel'] else ""
