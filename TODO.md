@@ -11,13 +11,17 @@
 
 ## Fixes and adjustments
 
-### File specific
+### Documentation
 - [ ] move or repeat TODOS from files here
 	- [ ] browse `rimebuilder/` files for local TODOS
 	- [ ] place each of those TODOS in this list
 	- [ ] format each entry with `path/filename (ln)`: `todo_txt`
-		- where `todo_txt` is the string after `# TODO `
-		- and where `(ln)` is the optional line number (if TODO is tied to a specific line)
+		- [ ] where `todo_txt` is the string after `# TODO `
+		- [ ] and where `(ln)` is the optional line number (if TODO is tied to a specific line)
+- [ ] clarify project usage in README
+	- [ ] use code markdown or images to illustrate startup
+	- [ ] use code markdown or images to illustrate navigating the main UI
+	- [ ] use code markdown or images to illustrate navigating each subtool
 
 ### UI and input
 - [ ] handle illegal character input
@@ -39,7 +43,7 @@
 - [ ] handle initial vowels in reverser, e.g. "ace cat" returns "at"
 - [X] look up a word given EN fanqie input, e.g. "write lede" returns "read"
 - [X] account for 0-rhymes
-- handling vowels in the rhymer/fanqieizer
+- [ ] handle vowels well in the rhymer/fanqieizer
 	- [X] cases where vowel-only syllable matches to an initial and final, e.g. "a"
 	- [ ] repair vowel-initial (e.g. "our") and vowel-only (e.g. "a") not finding good matches
 	- [ ] better ways to handle zero initial (first phone is main vowel)
