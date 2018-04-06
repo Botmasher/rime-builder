@@ -36,9 +36,9 @@ class LocalEnglishRimeAPI:
 		with open(file, "r") as file:
 			for line in file:
 				line_items = line.split()
-				line_phone = line_items[0]
-				line_type = line_items[len(line_items)-1]
-				if line_type.lower() == "vowel": vowels.append(line_phone)
+				line_phones = line_items[0]
+				line_type = line_items[1]
+				if line_type.lower() == "vowel": vowels.append(line_phones)
 		return vowels
 
 	def check_pretty_word(self, word):

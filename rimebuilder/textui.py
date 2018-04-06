@@ -100,7 +100,7 @@ def select_subtool():
 	print("  2 - fanqie finder for Chinese characters")
 	print("  3 - fanqie reverser for English")
 	print("  q - quit")
-	selected = input("\n  1, 2 or q? ")
+	selected = input("\n  1, 2, 3 or q? ")
 	if not re.match(kw_variants['#'], selected) and selected not in kw_variants['quit']:
 		print("\n  I did not recognize your input.")
 		return select_subtool()

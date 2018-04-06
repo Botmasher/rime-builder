@@ -1,6 +1,6 @@
 # Fanqie Rime Builder
 
-A tool for exploring Qieyun-style fanqie rimes in Chinese and applying the same method to one-syllable words in English.
+A tool for exploring Qieyun style fanqie rimes in Chinese and applying the same method to one-syllable words in English.
 
 ## Background
 
@@ -36,7 +36,7 @@ This project has three objectives:
 2. build a fanqie reading for any single-syllable English word
 3. reverse a fanqie reading to find the single-syllable English word
 
-To meet these objectives, the project is divided into three subtools.
+To meet these objectives, this project is divided into three subtools.
 
 ### Chinese Fanqie Finder
 
@@ -63,4 +63,3 @@ Currently all production features are found in `master`. The now-merged `localrh
 ## Contributing
 
 If you've used the tool and have ideas, bug fixes or enhancements in mind, you're a contributor! Whether you're programming, tinkering or just searching, if you've done some local testing and find ways to improve the tool, you're welcome to open an issue or a pull request. Please do document reproducible steps for fixes. Give as much relevant context as possible for enhancements.
-
